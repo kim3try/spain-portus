@@ -1,15 +1,6 @@
 <!DOCTYPE html>
 <html lang="ko">
 <head>
-<!-- Google tag (gtag.js) -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-B8LDZFRPXD"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
-
-  gtag('config', 'G-B8LDZFRPXD');
-</script>    
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>스페인 & 포르투갈 2주 여행 플래너</title>
@@ -20,7 +11,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700&display=swap" rel="stylesheet">
     <!-- Chosen Palette: Mediterranean Calm -->
     <!-- Application Structure Plan: 본 앱은 사용자가 여행 정보를 비선형적으로 탐색할 수 있도록 대시보드 스타일의 탭 기반 구조로 설계되었습니다. '추천 일정', '여행 예산', '도시별 정보', '핵심 정보'의 네 가지 주요 섹션으로 구성하여, 사용자가 가장 궁금한 정보부터 자유롭게 접근할 수 있도록 했습니다. 이 구조는 선형적인 보고서 형식보다 사용자의 필요에 즉각적으로 반응하며, 일정 비교, 예산 시뮬레이션 등 동적인 상호작용을 통해 계획 과정을 더 직관적이고 효율적으로 만듭니다. -->
-    <!-- Visualization & Content Choices: 보고서의 핵심 정보를 효과적으로 전달하기 위해 다음과 같이 시각화 및 상호작용 방식을 선택했습니다. [추천 일정]은 버튼으로 3가지 동선을 쉽게 전환하며 비교할 수 있도록 설계했습니다. [여행 예산]은 Chart.js의 도넛 차트를 사용하여 비용 구조를 시각화하고, 슬라이더를 통해 사용자가 예산을 직접 조절하며 총비용 변화를 즉시 확인할 수 있게 했습니다. [도시별 정보]와 [핵심 정보]는 아코디언과 탭을 활용하여 방대한 텍스트 정보를 깔끔하게 정리하고 필요시 상세 내용을 볼 수 있도록 구성했습니다. 이 모든 요소는 사용자의 이해를 돕고 능동적인 정보 탐색을 유도하기 위해 선택되었으며, SVG나 Mermaid JS는 사용하지 않았습니다. -->
+    <!-- Visualization & Content Choices: 보고서의 핵심 정보를 효과적으로 전달하기 위해 다음과 같이 시각화 및 상호작용 방식을 선택했습니다. [추천 일정]은 버튼으로 4가지 동선을 쉽게 전환하며 비교할 수 있도록 설계했습니다. 각 일정은 도시별로 묶어 아코디언 메뉴처럼 펼쳐 볼 수 있게 했습니다. [여행 예산]은 Chart.js의 도넛 차트를 사용하여 비용 구조를 시각화하고, 슬라이더를 통해 사용자가 예산을 직접 조절하며 총비용 변화를 즉시 확인할 수 있게 했습니다. [핵심 정보]는 탭을 활용하여 방대한 텍스트 정보를 깔끔하게 정리하고 필요시 상세 내용을 볼 수 있도록 구성했습니다. 이 모든 요소는 사용자의 이해를 돕고 능동적인 정보 탐색을 유도하기 위해 선택되었으며, SVG나 Mermaid JS는 사용하지 않았습니다. -->
     <!-- CONFIRMATION: NO SVG graphics used. NO Mermaid JS used. -->
     <style>
         body { font-family: 'Noto Sans KR', sans-serif; }
@@ -31,6 +22,7 @@
         .info-tab.active { border-color: #A0522D; color: #A0522D; border-bottom-width: 2px; }
         [x-cloak] { display: none; }
         .iti-card { border-left: 3px solid #CD853F; }
+        .city-day-card { background-color: #F8F8F8; padding: 1rem; border-radius: 0.5rem; margin-top: 0.5rem; }
     </style>
 </head>
 <body class="bg-[#FDF5E6] text-[#694A38]">
@@ -104,7 +96,7 @@
 
             <section id="cities" class="content-section hidden">
                 <div class="bg-white/50 p-6 rounded-xl shadow-lg backdrop-blur-sm">
-                    <h2 class="text-2xl font-bold text-[#A0522D] mb-4 text-center">도시별 매력 탐구</h2>
+                    <h2 class="text-2xl font-bold text-[#A0522D] mb-4 text-center">도시별 매력 탐구 ✨</h2>
                      <p class="text-center text-[#8B4513] mb-6">방문할 도시들의 핵심 정보를 확인해 보세요. 각 도시의 놓칠 수 없는 풍경과 경험, 그리고 꼭 맛봐야 할 대표 음식들을 정리했습니다. 도시 이름을 클릭하면 상세 정보가 펼쳐집니다.</p>
                     <div id="city-info-container" class="space-y-4"></div>
                 </div>
@@ -115,10 +107,12 @@
                     <h2 class="text-2xl font-bold text-[#A0522D] mb-4 text-center">여행자를 위한 핵심 정보</h2>
                     <p class="text-center text-[#8B4513] mb-6">성공적인 여행을 위해 꼭 알아야 할 실용적인 정보들을 모았습니다. 날씨와 준비물부터 교통, 안전 수칙까지, 여행 전 꼼꼼히 확인하여 편안하고 안전한 여행을 준비하세요.</p>
                     <div class="border-b border-gray-300 mb-4">
-                        <nav class="-mb-px flex justify-center space-x-4 md:space-x-8" aria-label="Tabs">
+                        <nav class="-mb-px flex flex-wrap justify-center space-x-4 md:space-x-8" aria-label="Tabs">
                             <button class="info-tab active whitespace-nowrap py-4 px-1 border-b-2 font-medium text-sm" data-infotab="weather">날씨와 준비물</button>
                             <button class="info-tab whitespace-nowrap py-4 px-1 border-b-2 font-medium text-sm border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300" data-infotab="transport">교통 정보</button>
                             <button class="info-tab whitespace-nowrap py-4 px-1 border-b-2 font-medium text-sm border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300" data-infotab="safety">안전 및 에티켓</button>
+                            <button class="info-tab whitespace-nowrap py-4 px-1 border-b-2 font-medium text-sm border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300" data-infotab="cost_saving">경비 절약 팁</button>
+                            <button class="info-tab whitespace-nowrap py-4 px-1 border-b-2 font-medium text-sm border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300" data-infotab="ai_qa">AI 여행 도우미</button>
                         </nav>
                     </div>
                     <div id="info-content-container"></div>
@@ -128,6 +122,260 @@
     </div>
 
     <script>
+        const geminiApiUrl = 'https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-05-20:generateContent?key=';
+            
+        // 도시 정보 데이터
+        const citiesData = [
+            {
+                name: '바르셀로나(스페인)', icon: '🎨', country: '스페인', food: '피데우아(해산물 파스타 파에야), 에스칼리바다(구운 채소 샐러드), 아로스 네그레(오징어 먹물밥), 츄러스, 카바(스파클링 와인).', sights: [
+                    { name: '사그라다 파밀리아', desc: '가우디의 미완성 걸작으로, 웅장한 규모와 섬세한 건축미를 자랑합니다.' },
+                    { name: '구엘 공원', desc: '가우디의 상상력이 담긴 독특한 조형물과 모자이크를 감상할 수 있는 공원입니다.' },
+                    { name: '고딕 지구', desc: '좁은 골목과 숨겨진 광장을 따라 중세 시대의 분위기를 느낄 수 있는 구시가지입니다.' },
+                    { name: '바르셀로네타 해변', desc: '지중해의 활기찬 분위기와 여유를 즐길 수 있는 해변입니다.' },
+                    { name: '피카소 미술관', desc: '천재 화가 피카소의 초기 작품부터 다양한 시기별 작품을 만날 수 있는 곳입니다.' },
+                    { name: '빛 축제(Llum BCN)', desc: '2월 7~9일에 열리며, 포블레노우 지역에서 다양한 조명 예술 작품을 볼 수 있습니다.' },
+                    { name: '산타 에우랄리아 축제', desc: '2월 11~16일에 열리는 카탈루냐 전통 축제로, 다양한 문화 행사를 즐길 수 있습니다.' }
+                ]
+            },
+            {
+                name: '포르투(포르투갈)', icon: '🍷', country: '포르투갈', food: '포트 와인, 신선한 해산물 요리 (특히 대구 요리).', sights: [
+                    { name: '도루강변', desc: '낭만적인 분위기 속에서 포트 와인 한 잔을 즐기기 좋은 곳입니다.' },
+                    { name: '렐루 서점', desc: '해리포터 작가에게 영감을 주었다고 알려진 아름다운 서점입니다.' },
+                    { name: '상벤투역', desc: '내부 벽면을 장식한 화려한 아줄레주(타일) 예술이 인상적인 역입니다.' },
+                    { name: '동 루이스 1세 다리', desc: '도루강을 가로지르는 아름다운 다리로, 포르투의 상징 중 하나입니다.' },
+                    { name: '포트 와인 셀러 투어', desc: '포트 와인의 제조 과정을 배우고 직접 시음해볼 수 있는 필수 코스입니다.' },
+                    { name: '도루 밸리 와이너리 투어', desc: '와인밭이 펼쳐진 아름다운 도루 계곡에서 와인과 풍경을 함께 즐길 수 있습니다.' }
+                ]
+            },
+            {
+                name: '마드리드(스페인)', icon: '👑', country: '스페인', food: '코시도 마드리예노(전통 스튜), 다양한 타파스, 초콜릿과 츄러스.', sights: [
+                    { name: '마드리드 왕궁', desc: '스페인 왕실의 화려한 역사를 느낄 수 있는 웅장한 건축물입니다.' },
+                    { name: '프라도 미술관', desc: '벨라스케스, 고야 등 스페인 거장들의 작품을 만날 수 있는 세계적인 미술관입니다.' },
+                    { name: '마요르 광장', desc: '스페인 사람들의 활기찬 삶과 에너지를 느낄 수 있는 역사적인 중심 광장입니다.' },
+                    { name: '레티로 공원', desc: '도심 속에서 여유롭게 산책하거나 휴식하기 좋은 넓은 공원입니다.' },
+                    { name: '마드리드 카니발', desc: '2월 14~18일에 열리며, 정열적인 축제 분위기를 만끽할 수 있습니다.' }
+                ]
+            },
+            {
+                name: '리스본(포르투갈)', icon: '🚋', country: '포르투갈', food: '파스텔 드 나타(에그타르트), 신선한 해산물 요리.', sights: [
+                    { name: '제로니무스 수도원', desc: '대항해 시대를 상징하는 아름다운 건축물로, 포르투갈 마누엘린 양식의 걸작입니다.' },
+                    { name: '코메르시우 광장', desc: '대서양을 향해 열려 있는 거대한 광장으로, 리스본의 상징적인 장소입니다.' },
+                    { name: '신트라', desc: '동화 같은 분위기의 페나 성과 무어인의 성터가 있는 근교 도시입니다.' },
+                    { name: '파두 공연', desc: '포르투갈의 정서가 담긴 전통 음악인 파두를 감상할 수 있습니다.' },
+                    { name: '아줄레주 박물관', desc: '포르투갈의 독특한 타일 예술인 아줄레주의 역사와 작품을 볼 수 있는 곳입니다.' }
+                ]
+            },
+            {
+                name: '그라나다(스페인)', icon: '🕌', country: '스페인', food: '살모레호(차가운 토마토 수프), 레차소(어린 양고기 요리), 타파스.', sights: [
+                    { name: '알함브라 궁전', desc: '이슬람 건축의 정수를 보여주는 유네스코 세계문화유산으로, 나스르 궁전, 헤네랄리페 정원 등으로 이루어져 있습니다.' },
+                    { name: '알바이신 지구', desc: '그라나다의 구시가지로, 좁은 골목길을 거닐며 아랍 문화의 흔적을 느낄 수 있습니다.' },
+                    { name: '산 니콜라스 전망대', desc: '알함브라 궁전과 시에라 네바다 산맥의 멋진 전경을 감상할 수 있는 최고의 장소입니다.' },
+                    { name: '그라나다 대성당', desc: '고딕과 르네상스 양식이 혼합된 웅장한 대성당으로, 스페인 역사에서 중요한 의미를 갖습니다.' }
+                ]
+            },
+            {
+                name: '세비야(스페인)', icon: '💃', country: '스페인', food: '하몽 이베리코(이베리아 햄), 페스카이토 프리토(튀김 생선), 오렌지 와인.', sights: [
+                    { name: '세비야 대성당', desc: '세계에서 가장 큰 고딕 양식의 대성당이자, 콜럼버스의 묘가 있는 곳으로 유명합니다.' },
+                    { name: '알카사르', desc: '이슬람과 스페인 건축 양식이 결합된 왕궁으로, 아름다운 정원이 인상적입니다.' },
+                    { name: '스페인 광장', desc: '웅장한 규모와 독특한 건축 양식으로 유명하며, 영화 촬영지로도 사용되었습니다.' },
+                    { name: '플라멩코 공연', desc: '스페인의 정열적인 문화와 예술을 직접 느낄 수 있는 공연입니다.' }
+                ]
+            }
+        ];
+
+        // 일정 데이터
+        const itinerariesData = {
+            '1': {
+                title: '일정 1: 바르셀로나(스페인) IN - 마드리드(스페인) - 리스본(포르투갈) - 포르투(포르투갈) OUT',
+                description: '스페인 주요 도시를 먼저 경험하고 포르투갈로 이동하는 효율적인 경로입니다. 축구 경기 관람일을 유연하게 조절할 수 있는 장점이 있습니다.',
+                highlights: [
+                     { text: 'FC 바르셀로나 홈 경기 관람: 여행 4일차 (2월 8일 또는 22일 예상)', dateNote: '출발일: 2월 5일 또는 19일경 (여행 1일차)' },
+                     { text: '레알 마드리드 홈 경기 관람: 여행 7일차 (2월 15일 또는 28일 예상)', dateNote: '출발일: 2월 9일 또는 22일경 (여행 1일차)' }
+                ],
+                total_estimated_cost: '약 369만원',
+                days: [
+                    { day: '1', city: '바르셀로나(스페인)', activities: '인천 출발 후 바르셀로나(BCN) 도착, 숙소 체크인. 저녁에는 고딕 지구와 람블라스 거리 산책 및 타파스 투어.', daily_cost: '약 10-15만원 (1인 기준, 식비/교통비 등)', transport: '바르셀로나 공항(BCN) → 숙소: 공항버스 또는 기차, 택시' },
+                    { day: '2', city: '바르셀로나(스페인)', activities: '가우디 건축물 투어 (사그라다 파밀리아, 구엘 공원, 카사 바트요 내부 관람).', daily_cost: '약 15-20만원 (1인 기준, 가우디 투어 및 입장료 포함)', transport: '도시 내 이동: 지하철 T-Casual 티켓 이용' },
+                    { day: '3', city: '바르셀로나(스페인)', activities: '피카소 미술관 방문, 바르셀로네타 해변에서 여유로운 시간, 저녁에는 츄러스와 초콜릿 맛보기.', daily_cost: '약 8-10만원 (1인 기준)', transport: '도시 내 이동: 지하철 또는 도보' },
+                    { day: '4', city: '바르셀로나(스페인)', activities: '축구 경기 또는 몬주익 성 방문(일요일 무료 입장). 저녁에는 카바(스파클링 와인)와 함께 현지식 저녁 식사.', daily_cost: '약 15-20만원 (1인 기준, 축구 티켓 별도)', transport: '도시 내 이동: 지하철' },
+                    { day: '5', city: '마드리드(스페인)', activities: '바르셀로나에서 AVE 고속 열차로 마드리드 이동(약 3시간). 숙소 체크인 후 산 미구엘 시장에서 다양한 타파스 경험.', daily_cost: '약 15-20만원 (1인 기준, 교통비 포함)', transport: '도시 간 이동: 바르셀로나 ↔ 마드리드 AVE 고속 열차' },
+                    { day: '6', city: '마드리드(스페인)', activities: '프라도 미술관에서 스페인 거장들의 작품 감상(무료 입장 시간 활용). 마드리드 왕궁과 마요르 광장 둘러보기.', daily_cost: '약 8-10만원 (1인 기준)', transport: '도시 내 이동: 지하철 또는 도보' },
+                    { day: '7', city: '마드리드(스페인)', activities: '레알 마드리드 홈 경기 직관 또는 근교 도시 톨레도/세고비아 당일치기 투어.', daily_cost: '약 15-20만원 (1인 기준, 축구 티켓 별도)', transport: '도시 내 이동: 지하철 / 근교 이동: 기차 또는 버스' },
+                    { day: '8', city: '리스본(포르투갈)', activities: '마드리드에서 리스본으로 비행기 이동(약 1시간 15분). 숙소 체크인 후 28번 트램을 타고 알파마 지구 탐방.', daily_cost: '약 15-20만원 (1인 기준, 항공권 별도)', transport: '도시 간 이동: 마드리드 ↔ 리스본 비행기' },
+                    { day: '9', city: '리스본(포르투갈)', activities: '벨렘 지구 투어 (제로니무스 수도원, 벨렘 탑) 및 원조 에그타르트 맛집 방문.', daily_cost: '약 8-10만원 (1인 기준)', transport: '도시 내 이동: 트램 또는 버스' },
+                    { day: '10', city: '리스본(포르투갈)', activities: '근교 신트라(Sintra) 당일치기 여행 (페나 성, 무어인의 성터).', daily_cost: '약 10-15만원 (1인 기준, 기차/입장료 포함)', transport: '근교 이동: 리스본 ↔ 신트라 기차' },
+                    { day: '11', city: '리스본(포르투갈)', activities: '코메르시우 광장 산책 및 파두 공연 관람.', daily_cost: '약 10-15만원 (1인 기준, 공연 관람료 포함)', transport: '도시 내 이동: 지하철 또는 도보' },
+                    { day: '12', city: '포르투(포르투갈)', activities: '리스본에서 포르투로 기차 이동(약 3시간). 숙소 체크인 후 도루 강변 산책 및 동 루이스 1세 다리 건너기.', daily_cost: '약 10-15만원 (1인 기준, 교통비 포함)', transport: '도시 간 이동: 리스본 ↔ 포르투 기차' },
+                    { day: '13', city: '포르투(포르투갈)', activities: '렐루 서점 방문, 상벤투역의 아줄레주 장식 감상. 오후에는 포트 와인 셀러 투어 및 시음.', daily_cost: '약 10-15만원 (1인 기준, 와인 투어 및 입장료 포함)', transport: '도시 내 이동: 도보 또는 지하철' },
+                    { day: '14', city: '포르투(포르투갈)', activities: '자유시간 및 기념품 쇼핑 후 포르투(OPO) 공항으로 이동하여 출국.', daily_cost: '약 5만원 (1인 기준)', transport: '포르투 공항(OPO) → 숙소: 공항 메트로 또는 택시' }
+                ]
+            },
+            '2': {
+                title: '일정 2: 포르투(포르투갈) IN - 리스본(포르투갈) - 세비야(스페인) - 바르셀로나(스페인) OUT',
+                description: '포르투갈을 먼저 깊이 경험하고 스페인 남부를 거쳐 바르셀로나로 이동합니다. 2월 포르투의 날씨 변동성을 고려해 여행 초반에 방문하는 동선입니다.',
+                highlights: [
+                     { text: 'FC 바르셀로나 홈 경기 관람: 여행 13일차 (2월 8일 또는 22일 예상)', dateNote: '출발일: 1월 27일 또는 2월 10일경 (여행 1일차)' }
+                ],
+                total_estimated_cost: '약 379만원',
+                days: [
+                    { day: '1', city: '포르투(포르투갈)', activities: '인천 출발 후 포르투(OPO) 도착. 숙소 체크인 및 도루 강변의 낭만적인 분위기 만끽.', daily_cost: '약 8-10만원 (1인 기준)', transport: '포르투 공항(OPO) → 숙소: 공항 메트로 또는 택시' },
+                    { day: '2', city: '포르투(포르투갈)', activities: '렐루 서점과 상벤투역 방문. 오후에는 포트 와인 셀러 투어 및 시음.', daily_cost: '약 10-15만원 (1인 기준, 와인 투어 및 입장료 포함)', transport: '도시 내 이동: 도보' },
+                    { day: '3', city: '포르투(포르투갈)', activities: '도루 밸리 와이너리 투어(전일) 또는 포즈(Foz) 지역 해변 산책.', daily_cost: '약 15-20만원 (1인 기준, 투어 비용 별도)', transport: '근교 이동: 투어 버스 또는 기차' },
+                    { day: '4', city: '리스본(포르투갈)', activities: '포르투에서 기차로 리스본 이동. 숙소 체크인 후 28번 트램을 타고 시내 구석구석을 둘러보기.', daily_cost: '약 10-15만원 (1인 기준, 교통비 포함)', transport: '도시 간 이동: 포르투 ↔ 리스본 기차' },
+                    { day: '5', city: '리스본(포르투갈)', activities: '벨렘 지구 투어 및 원조 에그타르트 맛집 방문. 저녁에는 파두 공연 관람.', daily_cost: '약 10-15만원 (1인 기준, 파두 공연 포함)', transport: '도시 내 이동: 트램 또는 버스' },
+                    { day: '6', city: '리스본(포르투갈)', activities: '근교 신트라 당일치기 (페나 성, 무어인의 성터).', daily_cost: '약 10-15만원 (1인 기준, 기차/입장료 포함)', transport: '근교 이동: 리스본 ↔ 신트라 기차' },
+                    { day: '7', city: '리스본(포르투갈)', activities: '해양 수족관 방문 또는 알파마 지구 탐방 후 자유 시간.', daily_cost: '약 8-10만원 (1인 기준)', transport: '도시 내 이동: 지하철 또는 도보' },
+                    { day: '8', city: '세비야(스페인)', activities: '리스본에서 세비야로 비행기 이동(약 1시간 20분). 숙소 체크인 후 세비야 대성당 방문.', daily_cost: '약 15-20만원 (1인 기준, 항공권 별도)', transport: '도시 간 이동: 리스본 ↔ 세비야 비행기' },
+                    { day: '9', city: '세비야(스페인)', activities: '알카사르 방문 및 스페인 광장 산책. 저녁에는 정통 플라멩코 공연 관람.', daily_cost: '약 15-20만원 (1인 기준, 입장료 및 플라멩코 공연 포함)', transport: '도시 내 이동: 도보' },
+                    { day: '10', city: '세비야(스페인)', activities: '자유시간 및 다음 도시로의 이동 준비.', daily_cost: '약 8-10만원 (1인 기준)', transport: '도시 내 이동: 도보' },
+                    { day: '11', city: '바르셀로나(스페인)', activities: '세비야에서 바르셀로나로 기차 또는 비행기 이동(기차 약 5시간, 비행기 약 1시간 30분). 숙소 체크인 및 고딕 지구 산책.', daily_cost: '약 15-20만원 (1인 기준, 교통비 별도)', transport: '도시 간 이동: 세비야 ↔ 바르셀로나 비행기 또는 기차' },
+                    { day: '12', city: '바르셀로나(스페인)', activities: '가우디 투어(사그라다 파밀리아, 구엘 공원 등).', daily_cost: '약 15-20만원 (1인 기준, 투어 및 입장료 포함)', transport: '도시 내 이동: 지하철' },
+                    { day: '13', city: '바르셀로나(스페인)', activities: 'FC 바르셀로나 홈 경기 직관 또는 바르셀로네타 해변과 피카소 미술관 방문.', daily_cost: '약 15-20만원 (1인 기준, 축구 티켓 별도)', transport: '도시 내 이동: 지하철' },
+                    { day: '14', city: '바르셀로나(스페인)', activities: '자유 시간 후 바르셀로나(BCN) 공항으로 이동하여 출국.', daily_cost: '약 5만원 (1인 기준)', transport: '바르셀로나 공항(BCN) → 숙소: 공항버스 또는 기차' }
+                ]
+            },
+            '3': {
+                title: '일정 3: 마드리드(스페인) IN - 바르셀로나(스페인) - 포르투(포르투갈) - 리스본(포르투갈) OUT (축구 직관 최적화)',
+                description: '축구 경기 직관을 최우선으로 고려하여 마드리드와 바르셀로나의 홈 경기 일정을 중심으로 유연하게 계획할 수 있도록 구성된 동선입니다.',
+                highlights: [
+                     { text: '레알 마드리드 홈 경기 관람: 여행 3일차 (2월 1일 또는 15일 예상)', dateNote: '출발일: 1월 30일 또는 2월 13일경 (여행 1일차)' },
+                     { text: 'FC 바르셀로나 홈 경기 관람: 여행 7일차 (2월 8일 또는 22일 예상)', dateNote: '출발일: 2월 2일 또는 16일경 (여행 1일차)' }
+                ],
+                total_estimated_cost: '약 379만원',
+                days: [
+                    { day: '1', city: '마드리드(스페인)', activities: '인천 출발 후 마드리드(MAD) 도착. 숙소 체크인 및 레알 마드리드 홈구장 베르나베우 스타디움 투어.', daily_cost: '약 10-15만원 (1인 기준)', transport: '마드리드 공항(MAD) → 숙소: 공항 익스프레스 또는 지하철' },
+                    { day: '2', city: '마드리드(스페인)', activities: '마드리드 카니발(2월 14-18일 해당 시) 또는 프라도 미술관(무료 입장 시간) 방문.', daily_cost: '약 8-10만원 (1인 기준)', transport: '도시 내 이동: 지하철 또는 도보' },
+                    { day: '3', city: '마드리드(스페인)', activities: '레알 마드리드 홈 경기 직관. 경기 전후의 활기찬 분위기 만끽.', daily_cost: '약 15-20만원 (1인 기준, 축구 티켓 별도)', transport: '도시 내 이동: 지하철' },
+                    { day: '4', city: '마드리드(스페인)', activities: '마드리드 왕궁, 마요르 광장 등 시내 명소 탐방 및 기념품 쇼핑.', daily_cost: '약 8-10만원 (1인 기준)', transport: '도시 내 이동: 도보' },
+                    { day: '5', city: '바르셀로나(스페인)', activities: '마드리드에서 바르셀로나로 AVE 고속 열차 이동. 숙소 체크인 후 FC 바르셀로나 홈구장 캄프 누 스타디움 투어.', daily_cost: '약 15-20만원 (1인 기준, 교통비 별도)', transport: '도시 간 이동: 마드리드 ↔ 바르셀로나 AVE 고속 열차' },
+                    { day: '6', city: '바르셀로나(스페인)', activities: '가우디 투어(사그라다 파밀리아, 구엘 공원 등) 및 빛 축제 관람(2월 7-9일 해당 시).', daily_cost: '약 15-20만원 (1인 기준, 투어 및 입장료 포함)', transport: '도시 내 이동: 지하철' },
+                    { day: '7', city: '바르셀로나(스페인)', activities: 'FC 바르셀로나 홈 경기 직관. 경기장 인근에서 현지 팬들과 함께 경기 분위기 즐기기.', daily_cost: '약 15-20만원 (1인 기준, 축구 티켓 별도)', transport: '도시 내 이동: 지하철' },
+                    { day: '8', city: '바르셀로나(스페인)', activities: '고딕 지구에서 중세 분위기를 느끼고, 바르셀로네타 해변에서 산책 후 휴식.', daily_cost: '약 8-10만원 (1인 기준)', transport: '도시 내 이동: 도보' },
+                    { day: '9', city: '포르투(포르투갈)', activities: '바르셀로나에서 포르투로 비행기 이동(약 1시간 40분). 숙소 체크인 후 도루 강변을 거닐며 낭만적인 야경 감상.', daily_cost: '약 15-20만원 (1인 기준, 항공권 별도)', transport: '도시 간 이동: 바르셀로나 ↔ 포르투 비행기' },
+                    { day: '10', city: '포르투(포르투갈)', activities: '렐루 서점 방문 후 포트 와인 셀러 투어 및 시음.', daily_cost: '약 10-15만원 (1인 기준, 와인 투어 및 입장료 포함)', transport: '도시 내 이동: 도보' },
+                    { day: '11', city: '포르투(포르투갈)', activities: '도루 밸리 와이너리 투어(전일).', daily_cost: '약 15-20만원 (1인 기준, 투어 비용 별도)', transport: '근교 이동: 투어 버스 또는 기차' },
+                    { day: '12', city: '리스본(포르투갈)', activities: '포르투에서 기차로 리스본 이동. 숙소 체크인 후 코메르시우 광장 및 알파마 지구 탐방.', daily_cost: '약 10-15만원 (1인 기준, 교통비 포함)', transport: '도시 간 이동: 포르투 ↔ 리스본 기차' },
+                    { day: '13', city: '리스본(포르투갈)', activities: '제로니무스 수도원, 벨렘 탑, 신트라 당일치기.', daily_cost: '약 10-15만원 (1인 기준, 기차/입장료 포함)', transport: '도시 내 이동: 트램/버스 / 근교 이동: 리스본 ↔ 신트라 기차' },
+                    { day: '14', city: '리스본(포르투갈)', activities: '자유 시간 및 기념품 쇼핑, 리스본(LIS) 공항으로 이동 및 인천 출발.', daily_cost: '약 5만원 (1인 기준)', transport: '리스본 공항(LIS) → 숙소: 공항 메트로 또는 택시' }
+                ]
+            },
+            '4': {
+                title: '일정 4: 바르셀로나(스페인) IN - 그라나다(스페인) - 세비야(스페인) - 리스본(포르투갈) - 포르투(포르투갈) OUT',
+                description: '축구 경기 관람을 시작으로, 스페인 남부의 이슬람 문화와 플라멩코의 정열을 경험한 후 포르투갈로 넘어가는 동선입니다. 2월의 따뜻한 날씨를 만끽할 수 있습니다.',
+                highlights: [
+                    { text: 'FC 바르셀로나 홈 경기 관람: 여행 4일차 (2월 8일 고정)', dateNote: '출발일: 2월 5일경 (여행 1일차)' }
+                ],
+                total_estimated_cost: '약 379만원',
+                days: [
+                    { day: '1', city: '바르셀로나(스페인)', activities: '인천 출발 후 바르셀로나(BCN) 도착, 숙소 체크인 및 고딕 지구 산책.', daily_cost: '약 10-15만원 (1인 기준, 식비/교통비 등)', transport: '바르셀로나 공항(BCN) → 숙소: 공항버스 또는 기차, 택시' },
+                    { day: '2', city: '바르셀로나(스페인)', activities: '가우디 투어(사그라다 파밀리아, 구엘 공원). 저녁에는 현지 미식 즐기기.', daily_cost: '약 15-20만원 (1인 기준, 가우디 투어 및 입장료 포함)', transport: '도시 내 이동: 지하철 T-Casual 티켓 이용' },
+                    { day: '3', city: '바르셀로나(스페인)', activities: '피카소 미술관 방문, 바르셀로네타 해변에서 휴식.', daily_cost: '약 8-10만원 (1인 기준)', transport: '도시 내 이동: 지하철 또는 도보' },
+                    { day: '4', city: '바르셀로나(스페인)', activities: 'FC 바르셀로나 홈 경기 직관! 경기 후 활기찬 분위기 만끽.', daily_cost: '약 15-20만원 (1인 기준, 축구 티켓 별도)', transport: '도시 내 이동: 지하철' },
+                    { day: '5', city: '그라나다(스페인)', activities: '바르셀로나에서 그라나다로 비행기 이동(약 1시간 20분), 숙소 체크인. 오후에 알바이신 지구 탐방 및 산 니콜라스 전망대에서 야경 감상.', daily_cost: '약 15-20만원 (1인 기준, 항공권 별도)', transport: '도시 간 이동: 바르셀로나 ↔ 그라나다 비행기' },
+                    { day: '6', city: '그라나다(스페인)', activities: '알함브라 궁전 투어(오전). 그라나다 대성당 방문 후 타파스 투어.', daily_cost: '약 15-20만원 (1인 기준, 입장료 포함)', transport: '도시 내 이동: 버스 또는 도보' },
+                    { day: '7', city: '세비야(스페인)', activities: '그라나다에서 세비야로 이동(버스 약 3시간). 숙소 체크인 후 스페인 광장 방문.', daily_cost: '약 10-15만원 (1인 기준, 교통비 포함)', transport: '도시 간 이동: 그라나다 ↔ 세비야 버스' },
+                    { day: '8', city: '세비야(스페인)', activities: '세비야 대성당 및 알카사르 투어. 저녁에는 정통 플라멩코 공연 관람.', daily_cost: '약 15-20만원 (1인 기준, 입장료 및 플라멩코 공연 포함)', transport: '도시 내 이동: 도보' },
+                    { day: '9', city: '세비야(스페인)', activities: '자유시간, 소품 쇼핑 후 리스본으로 이동 준비.', daily_cost: '약 8-10만원 (1인 기준)', transport: '도시 내 이동: 도보' },
+                    { day: '10', city: '리스본(포르투갈)', activities: '세비야에서 리스본으로 비행기 이동(약 1시간 20분). 숙소 체크인 후 벨렘 지구 투어.', daily_cost: '약 15-20만원 (1인 기준, 항공권 별도)', transport: '도시 간 이동: 세비야 ↔ 리스본 비행기' },
+                    { day: '11', city: '리스본(포르투갈)', activities: '28번 트램을 타고 알파마 지구 탐방. 코메르시우 광장에서 여유로운 시간.', daily_cost: '약 8-10만원 (1인 기준)', transport: '도시 내 이동: 트램 또는 도보' },
+                    { day: '12', city: '리스본(포르투갈)', activities: '근교 신트라(Sintra) 당일치기 여행.', daily_cost: '약 10-15만원 (1인 기준, 기차/입장료 포함)', transport: '근교 이동: 리스본 ↔ 신트라 기차' },
+                    { day: '13', city: '포르투(포르투갈)', activities: '리스본에서 포르투로 기차 이동(약 3시간). 숙소 체크인 후 도루 강변 산책 및 포트 와인 시음.', daily_cost: '약 10-15만원 (1인 기준, 교통비 포함)', transport: '도시 간 이동: 리스본 ↔ 포르투 기차' },
+                    { day: '14', city: '포르투(포르투갈)', activities: '렐루 서점, 상벤투역 방문 후 자유시간 및 기념품 쇼핑. 포르투(OPO) 공항으로 이동하여 출국.', daily_cost: '약 5만원 (1인 기준)', transport: '포르투 공항(OPO) → 숙소: 공항 메트로 또는 택시' }
+                ]
+            }
+        };
+
+        const infoData = {
+            weather: {
+                title: '날씨와 준비물',
+                content: `
+                    <h4 class="font-semibold text-lg text-[#A0522D] mb-2">2월 날씨 특징</h4>
+                    <p class="mb-4 text-[#8B4513]">스페인은 온화한 겨울 날씨를 보이지만, 포르투갈(특히 포르투)은 비가 잦을 수 있습니다. 일교차가 있으므로 겹쳐 입을 수 있는 옷차림이 중요합니다.</p>
+                    <h4 class="font-semibold text-lg text-[#A0522D] mb-2">필수 준비물</h4>
+                    <ul class="list-disc list-inside space-y-2 text-[#8B4513]">
+                        <li><strong>옷차림:</strong> 경량 패딩, 방수 점퍼, 얇은 긴팔 여러 벌, 미끄럼 방지 신발.</li>
+                        <li><strong>전자기기:</strong> 3구 멀티탭, 보조배터리, (필요시) 여행용 전기장판/전기포트.</li>
+                        <li><strong>기타:</strong> 우산, 선글라스, 자외선 차단제, 휴대폰 스트랩, 상비약, 핫팩.</li>
+                    </ul>
+                `
+            },
+            transport: {
+                title: '교통 정보',
+                content: `
+                    <h4 class="font-semibold text-lg text-[#A0522D] mb-2">국가 간 이동 (스페인 ↔ 포르투갈)</h4>
+                    <p class="mb-4 text-[#8B4513]">가장 빠른 방법은 <strong>비행기</strong>(저가항공 이용 시 저렴), 가장 저렴한 방법은 <strong>버스</strong>(7~10시간 소요)입니다. 기차는 비효율적이므로 추천하지 않습니다.</p>
+                    <h4 class="font-semibold text-lg text-[#A0522D] mb-2">국내 이동</h4>
+                    <ul class="list-disc list-inside space-y-2 text-[#8B4513]">
+                        <li><strong>스페인 내:</strong> 고속 열차 <strong>AVE</strong>가 가장 빠르고 편리합니다. (예: 마드리드-바르셀로나 약 3시간)</li>
+                        <li><strong>포르투갈 내:</strong> 기차 <strong>CP</strong>가 효율적입니다. (예: 리스본-포르투 약 3시간)</li>
+                    </ul>
+                    <h4 class="font-semibold text-lg text-[#A0522D] mb-2">도시 내 대중교통</h4>
+                    <p class="text-[#8B4513]">각 도시별 교통카드(바르셀로나 T-Casual, 리스본 Viva Viagem 등)를 구입하면 비용을 절약할 수 있습니다. 포르투갈에서는 탑승 시 반드시 티켓을 태그해야 벌금을 피할 수 있습니다.</p>
+                `
+            },
+            safety: {
+                title: '안전 및 에티켓',
+                content: `
+                    <h4 class="font-semibold text-lg text-[#A0522D] mb-2">소매치기 예방</h4>
+                    <p class="mb-4 text-[#8B4513]">관광객이 많은 곳에서는 항상 소매치기를 조심해야 합니다.</p>
+                    <ul class="list-disc list-inside space-y-2 text-[#8B4513]">
+                        <li>가방은 앞으로 메고, 지퍼를 항상 잠급니다.</li>
+                        <li>휴대폰, 지갑은 주머니에 넣지 않고 가방 깊숙이 보관합니다. 휴대폰 스트랩 사용을 추천합니다.</li>
+                        <li>현금은 소액만 소지하고 여러 곳에 분산 보관합니다.</li>
+                        <li>낯선 사람이 접근하면 경계하고, 테이블 위에 귀중품을 올려두지 않습니다.</li>
+                    </ul>
+                    <h4 class="font-semibold text-lg text-[#A0522D] mb-2">현지 에티켓</h4>
+                     <ul class="list-disc list-inside space-y-2 text-[#8B4513]">
+                        <li><strong>팁 문화:</strong> 필수는 아니지만, 좋은 서비스에 대해 5~10% 정도의 팁을 남기는 것이 일반적입니다.</li>
+                        <li><strong>식사 예절:</strong> 식당에서 제공되는 빵이나 올리브는 유료인 경우가 있으니 원치 않으면 거절할 수 있습니다.</li>
+                     </ul>
+                `
+            },
+             cost_saving: {
+                title: '경비 절약 팁',
+                content: `
+                    <h4 class="font-semibold text-lg text-[#A0522D] mb-2">항공권 및 숙박</h4>
+                    <ul class="list-disc list-inside space-y-2 text-[#8B4513]">
+                        <li><strong>얼리버드 예약:</strong> 항공권과 숙소는 여행 일정이 확정되는 즉시 최대한 빨리 예약하는 것이 가장 저렴합니다.</li>
+                        <li><strong>숙소 선택:</strong> 주방이 있는 에어비앤비나 호스텔을 이용하면 외식비 절약에 큰 도움이 됩니다. 마트 물가는 레스토랑보다 훨씬 저렴합니다.</li>
+                    </ul>
+                    <h4 class="font-semibold text-lg text-[#A0522D] mb-2">교통비</h4>
+                    <ul class="list-disc list-inside space-y-2 text-[#8B4513]">
+                        <li><strong>장거리 이동:</strong> 도시 간 이동은 기차(AVE)나 버스(Flixbus, ALSA)를 미리 예약하면 할인을 받을 수 있습니다. 스페인 철도청(Renfe)이나 포르투갈 철도청(CP) 공식 웹사이트를 이용하는 것이 수수료를 아끼는 방법입니다.</li>
+                        <li><strong>도시 내 이동:</strong> 바르셀로나 T-Casual, 리스본 Viva Viagem 등 여행자를 위한 교통카드를 활용하면 편리하고 경제적입니다.</li>
+                        <li><strong>우버 vs 대중교통:</strong> 포르투갈에서는 2인 이상이 이동할 경우 대중교통 요금과 우버 요금의 차이가 크지 않아 시간과 노력을 절약하는 데 유리할 수 있습니다. 그러나 스페인에서는 우버 가격이 대중교통보다 3배 정도 비싸므로, 대중교통을 주로 이용하는 것이 예산 절감에 더 효과적입니다.</li>
+                    </ul>
+                    <h4 class="font-semibold text-lg text-[#A0522D] mb-2">식비 및 관광</h4>
+                    <ul class="list-disc list-inside space-y-2 text-[#8B4513]">
+                        <li><strong>점심 특선:</strong> 스페인과 포르투갈 식당에는 '메누 델 디아(Menu del Día)'라는 저렴한 점심 코스 메뉴가 있습니다. 2~3코스 요리와 음료가 포함되어 있어 가성비가 매우 좋습니다.</li>
+                        <li><strong>구글 지도 활용:</strong> 방문하려는 식당의 최신 메뉴판 사진을 구글 지도에서 확인하면 가격을 미리 예측할 수 있습니다.</li>
+                        <li><strong>무료 입장:</strong> 스페인에는 특정 요일이나 시간대에 무료 입장이 가능한 관광지가 많습니다. (예: 바르셀로나 몬주익 성(일요일 오후 3시 이후), 프라도 미술관(저녁 시간대))</li>
+                    </ul>
+                `
+            },
+            ai_qa: {
+                title: 'AI 여행 도우미',
+                content: `
+                    <div class="mb-4">
+                        <h4 class="font-semibold text-lg text-[#A0522D] mb-2">무엇이 궁금하신가요? ✨</h4>
+                        <p class="text-[#8B4513]">스페인과 포르투갈 여행에 대한 어떤 질문이든 AI가 답해 드립니다. 아래에 질문을 입력해 보세요.</p>
+                        <div class="mt-4 flex flex-col md:flex-row gap-2">
+                            <input type="text" id="ai-query-input" class="flex-grow p-2 border rounded-lg text-sm text-gray-800" placeholder="예) 리스본의 숨겨진 명소를 알려줘" />
+                            <button id="ai-query-button" class="px-4 py-2 bg-[#CD853F] text-white font-medium rounded-lg shadow-md hover:bg-[#A0522D] transition-colors">질문하기</button>
+                        </div>
+                        <div id="ai-response-container" class="mt-4 p-4 bg-[#FDF5E6] border border-gray-300 rounded-lg hidden">
+                            <div id="ai-loading" class="text-center" style="display: none;">
+                                <div class="inline-block h-8 w-8 animate-spin rounded-full border-4 border-solid border-current border-r-transparent align-[-0.125em] text-[#A0522D] motion-reduce:animate-[spin_1.5s_linear_infinite]" role="status">
+                                    <span class="!absolute !-m-px !h-px !w-px !overflow-hidden !whitespace-nowrap !border-0 !p-0 ![clip:rect(0,0,0,0)]">Loading...</span>
+                                </div>
+                            </div>
+                            <div id="ai-response-text" class="text-gray-800"></div>
+                        </div>
+                    </div>
+                `
+            },
+        };
+        
         document.addEventListener('DOMContentLoaded', () => {
             const navButtons = document.querySelectorAll('.nav-button');
             const contentSections = document.querySelectorAll('.content-section');
@@ -137,164 +385,20 @@
             const infoTabButtons = document.querySelectorAll('.info-tab');
             const infoContentContainer = document.getElementById('info-content-container');
 
-            const data = {
-                itineraries: {
-                    '1': {
-                        title: '일정 1: 바르셀로나(스페인) IN - 마드리드(스페인) - 리스본(포르투갈) - 포르투(포르투갈) OUT',
-                        description: '스페인 주요 도시를 먼저 경험하고 포르투갈로 이동하는 효율적인 경로입니다. 축구 경기 관람일을 유연하게 조절할 수 있는 장점이 있습니다.',
-                        highlights: [
-                             { text: 'FC 바르셀로나 홈 경기 관람: 여행 4일차 (2월 8일 또는 22일 예상)', dateNote: '출발일: 2월 5일 또는 19일경 (여행 1일차)' },
-                             { text: '레알 마드리드 홈 경기 관람: 여행 7일차 (2월 15일 또는 28일 예상)', dateNote: '출발일: 2월 9일 또는 22일경 (여행 1일차)' }
-                        ],
-                        days: [
-                            { day: '1-4', city: '바르셀로나(스페인)', activities: 'Day 1: 인천 출발 후 바르셀로나(BCN) 도착, 숙소 체크인. 저녁에는 고딕 지구와 람블라스 거리 산책 및 타파스 투어.\nDay 2: 가우디 건축물 투어 (사그라다 파밀리아, 구엘 공원, 카사 바트요 내부 관람).\nDay 3: 피카소 미술관 방문, 바르셀로네타 해변에서 여유로운 시간, 저녁에는 츄러스와 초콜릿 맛보기.\nDay 4: 축구 경기 또는 몬주익 성 방문(일요일 무료 입장). 저녁에는 카바(스파클링 와인)와 함께 현지식 저녁 식사.' },
-                            { day: '5-7', city: '마드리드(스페인)', activities: 'Day 5: 바르셀로나에서 AVE 고속 열차로 마드리드 이동(약 3시간). 숙소 체크인 후 산 미구엘 시장에서 다양한 타파스 경험.\nDay 6: 프라도 미술관에서 스페인 거장들의 작품 감상(무료 입장 시간 활용). 마드리드 왕궁과 마요르 광장 둘러보기.\nDay 7: 레알 마드리드 홈 경기 직관 또는 근교 도시 톨레도/세고비아 당일치기 투어.' },
-                            { day: '8-11', city: '리스본(포르투갈)', activities: 'Day 8: 마드리드에서 리스본으로 비행기 이동(약 1시간 15분). 숙소 체크인 후 28번 트램을 타고 알파마 지구 탐방.\nDay 9: 벨렘 지구 투어 (제로니무스 수도원, 벨렘 탑) 및 원조 에그타르트 맛집 방문.\nDay 10: 근교 신트라(Sintra) 당일치기 여행 (페나 성, 무어인의 성터).\nDay 11: 코메르시우 광장 산책 및 파두 공연 관람.' },
-                            { day: '12-14', city: '포르투(포르투갈)', activities: 'Day 12: 리스본에서 포르투로 기차 이동(약 3시간). 숙소 체크인 후 도루 강변 산책 및 동 루이스 1세 다리 건너기.\nDay 13: 렐루 서점 방문, 상벤투역의 아줄레주 장식 감상. 오후에는 포트 와인 셀러 투어 및 시음.\nDay 14: 자유시간 및 기념품 쇼핑 후 포르투(OPO) 공항으로 이동하여 출국.' }
-                        ]
-                    },
-                    '2': {
-                        title: '일정 2: 포르투(포르투갈) IN - 리스본(포르투갈) - 세비야(스페인) - 바르셀로나(스페인) OUT',
-                        description: '포르투갈을 먼저 깊이 경험하고 스페인 남부를 거쳐 바르셀로나로 이동합니다. 2월 포르투의 날씨 변동성을 고려해 여행 초반에 방문하는 동선입니다.',
-                        highlights: [
-                             { text: 'FC 바르셀로나 홈 경기 관람: 여행 13일차 (2월 8일 또는 22일 예상)', dateNote: '출발일: 1월 27일 또는 2월 10일경 (여행 1일차)' }
-                        ],
-                        days: [
-                            { day: '1-3', city: '포르투(포르투갈)', activities: 'Day 1: 인천 출발 후 포르투(OPO) 도착. 숙소 체크인 및 도루 강변의 낭만적인 분위기 만끽.\nDay 2: 렐루 서점과 상벤투역 방문. 오후에는 포트 와인 셀러 투어 및 시음.\nDay 3: 도루 밸리 와이너리 투어(전일) 또는 포즈(Foz) 지역 해변 산책.' },
-                            { day: '4-7', city: '리스본(포르투갈)', activities: 'Day 4: 포르투에서 기차로 리스본 이동. 숙소 체크인 후 28번 트램을 타고 시내 구석구석을 둘러보기.\nDay 5: 벨렘 지구 투어 및 원조 에그타르트 맛집 방문. 저녁에는 파두 공연 관람.\nDay 6: 근교 신트라 당일치기 (페나 성, 무어인의 성터).\nDay 7: 해양 수족관 방문 또는 알파마 지구 탐방 후 자유 시간.' },
-                            { day: '8-10', city: '세비야(스페인)/그라나다(스페인)', activities: 'Day 8: 리스본에서 세비야/그라나다로 버스/비행기 이동. 숙소 체크인 후 각 도시의 상징적인 건축물(세비야 대성당, 알함브라 궁전) 방문.\nDay 9: 세비야에서 정통 플라멩코 공연 관람 및 타파스 투어 또는 그라나다 알바이신 지구 탐방.\nDay 10: 자유 시간 및 다음 도시로의 이동 준비.' },
-                            { day: '11-14', city: '바르셀로나(스페인)', activities: 'Day 11: 스페인 남부에서 바르셀로나로 기차/비행기 이동. 숙소 체크인 및 고딕 지구 산책.\nDay 12: 가우디 투어(사그라다 파밀리아, 구엘 공원 등) 및 빛 축제 관람(2월 7-9일 해당 시).\nDay 13: FC 바르셀로나 홈 경기 직관 또는 바르셀로네타 해변과 피카소 미술관 방문.\nDay 14: 자유 시간 후 바르셀로나(BCN) 공항으로 이동하여 출국.' }
-                        ]
-                    },
-                    '3': {
-                        title: '일정 3: 마드리드(스페인) IN - 바르셀로나(스페인) - 포르투(포르투갈) - 리스본(포르투갈) OUT (축구 직관 최적화)',
-                        description: '축구 경기 직관을 최우선으로 고려하여 마드리드와 바르셀로나의 홈 경기 일정을 중심으로 유연하게 계획할 수 있도록 구성된 동선입니다.',
-                        highlights: [
-                             { text: '레알 마드리드 홈 경기 관람: 여행 3일차 (2월 1일 또는 15일 예상)', dateNote: '출발일: 1월 30일 또는 2월 13일경 (여행 1일차)' },
-                             { text: 'FC 바르셀로나 홈 경기 관람: 여행 7일차 (2월 8일 또는 22일 예상)', dateNote: '출발일: 2월 2일 또는 16일경 (여행 1일차)' }
-                        ],
-                        days: [
-                            { day: '1-4', city: '마드리드(스페인)', activities: 'Day 1: 인천 출발 후 마드리드(MAD) 도착. 숙소 체크인 및 레알 마드리드 홈구장 베르나베우 스타디움 투어.\nDay 2: 마드리드 카니발(2월 14-18일 해당 시) 또는 프라도 미술관(무료 입장 시간) 방문.\nDay 3: 레알 마드리드 홈 경기 직관. 경기 전후의 활기찬 분위기 만끽.\nDay 4: 마드리드 왕궁, 마요르 광장 등 시내 명소 탐방 및 기념품 쇼핑.' },
-                            { day: '5-8', city: '바르셀로나(스페인)', activities: 'Day 5: 마드리드에서 바르셀로나로 AVE 고속 열차 이동. 숙소 체크인 후 FC 바르셀로나 홈구장 캄프 누 스타디움 투어.\nDay 6: 가우디 투어(사그라다 파밀리아, 구엘 공원 등) 및 빛 축제 관람(2월 7-9일 해당 시).\nDay 7: FC 바르셀로나 홈 경기 직관. 경기장 인근에서 현지 팬들과 함께 경기 분위기 즐기기.\nDay 8: 고딕 지구에서 중세 분위기를 느끼고, 바르셀로네타 해변에서 산책 후 휴식.' },
-                            { day: '9-11', city: '포르투(포르투갈)', activities: 'Day 9: 바르셀로나에서 포르투로 비행기 이동(약 1시간 40분). 숙소 체크인 후 도루 강변을 거닐며 낭만적인 야경 감상.\nDay 10: 렐루 서점 방문 후 포트 와인 셀러 투어 및 시음.\nDay 11: 도루 밸리 와이너리 투어(전일).\nDay 12-14: 리스본 (3박)' },
-                            { day: '12', city: '포르투(포르투갈)', activities: '포르투에서 기차로 리스본 이동. 숙소 체크인 후 코메르시우 광장 및 알파마 지구 탐방.\nDay 13: 제로니무스 수도원, 벨렘 탑, 신트라 당일치기.\nDay 14: 자유 시간 및 기념품 쇼핑, 리스본(LIS) 공항으로 이동 및 인천 출발.' }
-                        ]
-                    }
-                },
-                cities: [
-                    { name: '바르셀로나(스페인)', icon: '🎨', sights: [
-                        { name: '사그라다 파밀리아', desc: '가우디의 미완성 걸작으로, 웅장한 규모와 섬세한 건축미를 자랑합니다.' },
-                        { name: '구엘 공원', desc: '가우디의 상상력이 담긴 독특한 조형물과 모자이크를 감상할 수 있는 공원입니다.' },
-                        { name: '고딕 지구', desc: '좁은 골목과 숨겨진 광장을 따라 중세 시대의 분위기를 느낄 수 있는 구시가지입니다.' },
-                        { name: '바르셀로네타 해변', desc: '지중해의 활기찬 분위기와 여유를 즐길 수 있는 해변입니다.' },
-                        { name: '피카소 미술관', desc: '천재 화가 피카소의 초기 작품부터 다양한 시기별 작품을 만날 수 있는 곳입니다.' },
-                        { name: '빛 축제(Llum BCN)', desc: '2월 7~9일에 열리며, 포블레노우 지역에서 다양한 조명 예술 작품을 볼 수 있습니다.' },
-                        { name: '산타 에우랄리아 축제', desc: '2월 11~16일에 열리는 카탈루냐 전통 축제로, 다양한 문화 행사를 즐길 수 있습니다.' }
-                    ], food: '피데우아(해산물 파스타 파에야), 에스칼리바다(구운 채소 샐러드), 아로스 네그레(오징어 먹물밥), 츄러스, 카바(스파클링 와인).' },
-                    { name: '포르투(포르투갈)', icon: '🍷', sights: [
-                        { name: '도루강변', desc: '낭만적인 분위기 속에서 포트 와인 한 잔을 즐기기 좋은 곳입니다.' },
-                        { name: '렐루 서점', desc: '해리포터 작가에게 영감을 주었다고 알려진 아름다운 서점입니다.' },
-                        { name: '상벤투역', desc: '내부 벽면을 장식한 화려한 아줄레주(타일) 예술이 인상적인 역입니다.' },
-                        { name: '동 루이스 1세 다리', desc: '도루강을 가로지르는 아름다운 다리로, 포르투의 상징 중 하나입니다.' },
-                        { name: '포트 와인 셀러 투어', desc: '포트 와인의 제조 과정을 배우고 직접 시음해볼 수 있는 필수 코스입니다.' },
-                        { name: '도루 밸리 와이너리 투어', desc: '와인밭이 펼쳐진 아름다운 도루 계곡에서 와인과 풍경을 함께 즐길 수 있습니다.' }
-                    ], food: '포트 와인, 신선한 해산물 요리 (특히 대구 요리).' },
-                    { name: '마드리드(스페인)', icon: '👑', sights: [
-                        { name: '마드리드 왕궁', desc: '스페인 왕실의 화려한 역사를 느낄 수 있는 웅장한 건축물입니다.' },
-                        { name: '프라도 미술관', desc: '벨라스케스, 고야 등 스페인 거장들의 작품을 만날 수 있는 세계적인 미술관입니다.' },
-                        { name: '마요르 광장', desc: '스페인 사람들의 활기찬 삶과 에너지를 느낄 수 있는 역사적인 중심 광장입니다.' },
-                        { name: '레티로 공원', desc: '도심 속에서 여유롭게 산책하거나 휴식하기 좋은 넓은 공원입니다.' },
-                        { name: '마드리드 카니발', desc: '2월 14~18일에 열리며, 정열적인 축제 분위기를 만끽할 수 있습니다.' }
-                    ], food: '코시도 마드리예노(전통 스튜), 다양한 타파스, 초콜릿과 츄러스.' },
-                    { name: '리스본(포르투갈)', icon: '🚋', sights: [
-                        { name: '제로니무스 수도원', desc: '대항해 시대를 상징하는 아름다운 건축물로, 포르투갈 마누엘린 양식의 걸작입니다.' },
-                        { name: '코메르시우 광장', desc: '대서양을 향해 열려 있는 거대한 광장으로, 리스본의 상징적인 장소입니다.' },
-                        { name: '신트라', desc: '동화 같은 분위기의 페나 성과 무어인의 성터가 있는 근교 도시입니다.' },
-                        { name: '파두 공연', desc: '포르투갈의 정서가 담긴 전통 음악인 파두를 감상할 수 있습니다.' },
-                        { name: '아줄레주 박물관', desc: '포르투갈의 독특한 타일 예술인 아줄레주의 역사와 작품을 볼 수 있는 곳입니다.' }
-                    ], food: '파스텔 드 나타(에그타르트), 신선한 해산물 요리.' },
-                    { name: '그라나다(스페인)', icon: '🕌', sights: [
-                        { name: '알함브라 궁전', desc: '이슬람 건축의 정수를 보여주는 유네스코 세계문화유산으로, 나스르 궁전, 헤네랄리페 정원 등으로 이루어져 있습니다.' },
-                        { name: '알바이신 지구', desc: '그라나다의 구시가지로, 좁은 골목길을 거닐며 아랍 문화의 흔적을 느낄 수 있습니다.' },
-                        { name: '산 니콜라스 전망대', desc: '알함브라 궁전과 시에라 네바다 산맥의 멋진 전경을 감상할 수 있는 최고의 장소입니다.' },
-                        { name: '그라나다 대성당', desc: '고딕과 르네상스 양식이 혼합된 웅장한 대성당으로, 스페인 역사에서 중요한 의미를 갖습니다.' }
-                    ], food: '살모레호(차가운 토마토 수프), 레차소(어린 양고기 요리), 타파스.' },
-                    { name: '세비야(스페인)', icon: '💃', sights: [
-                        { name: '세비야 대성당', desc: '세계에서 가장 큰 고딕 양식의 대성당이자, 콜럼버스의 묘가 있는 곳으로 유명합니다.' },
-                        { name: '알카사르', desc: '이슬람과 스페인 건축 양식이 결합된 왕궁으로, 아름다운 정원이 인상적입니다.' },
-                        { name: '스페인 광장', desc: '웅장한 규모와 독특한 건축 양식으로 유명하며, 영화 촬영지로도 사용되었습니다.' },
-                        { name: '플라멩코 공연', desc: '스페인의 정열적인 문화와 예술을 직접 느낄 수 있는 공연입니다.' }
-                    ], food: '하몽 이베리코(이베리아 햄), 페스카이토 프리토(튀김 생선), 오렌지 와인.' }
-                ],
-                info: {
-                    weather: {
-                        title: '날씨와 준비물',
-                        content: `
-                            <h4 class="font-semibold text-lg text-[#A0522D] mb-2">2월 날씨 특징</h4>
-                            <p class="mb-4 text-[#8B4513]">스페인은 온화한 겨울 날씨를 보이지만, 포르투갈(특히 포르투)은 비가 잦을 수 있습니다. 일교차가 있으므로 겹쳐 입을 수 있는 옷차림이 중요합니다.</p>
-                            <h4 class="font-semibold text-lg text-[#A0522D] mb-2">필수 준비물</h4>
-                            <ul class="list-disc list-inside space-y-2 text-[#8B4513]">
-                                <li><strong>옷차림:</strong> 경량 패딩, 방수 점퍼, 얇은 긴팔 여러 벌, 미끄럼 방지 신발.</li>
-                                <li><strong>전자기기:</strong> 3구 멀티탭, 보조배터리, (필요시) 여행용 전기장판/전기포트.</li>
-                                <li><strong>기타:</strong> 우산, 선글라스, 자외선 차단제, 휴대폰 스트랩, 상비약, 핫팩.</li>
-                            </ul>
-                        `
-                    },
-                    transport: {
-                        title: '교통 정보',
-                        content: `
-                            <h4 class="font-semibold text-lg text-[#A0522D] mb-2">국가 간 이동 (스페인 ↔ 포르투갈)</h4>
-                            <p class="mb-4 text-[#8B4513]">가장 빠른 방법은 <strong>비행기</strong>(저가항공 이용 시 저렴), 가장 저렴한 방법은 <strong>버스</strong>(7~10시간 소요)입니다. 기차는 비효율적이므로 추천하지 않습니다.</p>
-                            <h4 class="font-semibold text-lg text-[#A0522D] mb-2">국내 이동</h4>
-                            <ul class="list-disc list-inside space-y-2 text-[#8B4513]">
-                                <li><strong>스페인 내:</strong> 고속 열차 <strong>AVE</strong>가 가장 빠르고 편리합니다. (예: 마드리드-바르셀로나 약 3시간)</li>
-                                <li><strong>포르투갈 내:</strong> 기차 <strong>CP</strong>가 효율적입니다. (예: 리스본-포르투 약 3시간)</li>
-                            </ul>
-                            <h4 class="font-semibold text-lg text-[#A0522D] mb-2">도시 내 대중교통</h4>
-                            <p class="text-[#8B4513]">각 도시별 교통카드(바르셀로나 T-Casual, 리스본 Viva Viagem 등)를 구입하면 비용을 절약할 수 있습니다. 포르투갈에서는 탑승 시 반드시 티켓을 태그해야 벌금을 피할 수 있습니다.</p>
-                        `
-                    },
-                    safety: {
-                        title: '안전 및 에티켓',
-                        content: `
-                            <h4 class="font-semibold text-lg text-[#A0522D] mb-2">소매치기 예방</h4>
-                            <p class="mb-4 text-[#8B4513]">관광객이 많은 곳에서는 항상 소매치기를 조심해야 합니다.</p>
-                            <ul class="list-disc list-inside space-y-2 text-[#8B4513]">
-                                <li>가방은 앞으로 메고, 지퍼를 항상 잠급니다.</li>
-                                <li>휴대폰, 지갑은 주머니에 넣지 않고 가방 깊숙이 보관합니다. 휴대폰 스트랩 사용을 추천합니다.</li>
-                                <li>현금은 소액만 소지하고 여러 곳에 분산 보관합니다.</li>
-                                <li>낯선 사람이 접근하면 경계하고, 테이블 위에 귀중품을 올려두지 않습니다.</li>
-                            </ul>
-                            <h4 class="font-semibold text-lg text-[#A0522D] mb-2">현지 에티켓</h4>
-                             <ul class="list-disc list-inside space-y-2 text-[#8B4513]">
-                                <li><strong>팁 문화:</strong> 필수는 아니지만, 좋은 서비스에 대해 5~10% 정도의 팁을 남기는 것이 일반적입니다.</li>
-                                <li><strong>식사 예절:</strong> 식당에서 제공되는 빵이나 올리브는 유료인 경우가 있으니 원치 않으면 거절할 수 있습니다.</li>
-                             </ul>
-                        `
-                    }
-                }
-            };
-            
-            data.itineraries['4'] = {
-                title: '일정 4: 바르셀로나(스페인) IN - 그라나다(스페인) - 세비야(스페인) - 리스본(포르투갈) - 포르투(포르투갈) OUT',
-                description: '축구 경기 관람을 시작으로, 스페인 남부의 이슬람 문화와 플라멩코의 정열을 경험한 후 포르투갈로 넘어가는 동선입니다. 2월의 따뜻한 날씨를 만끽할 수 있습니다.',
-                highlights: [
-                    { text: 'FC 바르셀로나 홈 경기 관람: 여행 4일차 (2월 8일 고정)', dateNote: '출발일: 2월 5일경 (여행 1일차)' }
-                ],
-                days: [
-                    { day: '1-4', city: '바르셀로나(스페인)', activities: 'Day 1: 인천 출발 후 바르셀로나(BCN) 도착, 숙소 체크인 및 고딕 지구 산책.\nDay 2: 가우디 투어(사그라다 파밀리아, 구엘 공원). 저녁에는 현지 미식 즐기기.\nDay 3: 피카소 미술관 방문, 바르셀로네타 해변에서 휴식.\nDay 4: FC 바르셀로나 홈 경기 직관! 경기 후 활기찬 분위기 만끽.' },
-                    { day: '5-6', city: '그라나다(스페인)', activities: 'Day 5: 바르셀로나에서 그라나다로 비행기 이동(약 1시간 20분), 숙소 체크인. 오후에 알바이신 지구 탐방 및 산 니콜라스 전망대에서 야경 감상.\nDay 6: 알함브라 궁전 투어(오전). 그라나다 대성당 방문 후 타파스 투어.' },
-                    { day: '7-9', city: '세비야(스페인)', activities: 'Day 7: 그라나다에서 세비야로 이동(버스/기차, 약 3시간). 숙소 체크인 후 스페인 광장 방문.\nDay 8: 세비야 대성당 및 알카사르 투어. 저녁에는 정통 플라멩코 공연 관람.\nDay 9: 자유시간, 소품 쇼핑 후 리스본으로 이동 준비.' },
-                    { day: '10-12', city: '리스본(포르투갈)', activities: 'Day 10: 세비야에서 리스본으로 비행기/버스 이동(비행기 약 1시간, 버스 약 7시간). 숙소 체크인 후 벨렘 지구 투어.\nDay 11: 28번 트램을 타고 알파마 지구 탐방. 코메르시우 광장에서 여유로운 시간.\nDay 12: 근교 신트라(Sintra) 당일치기 여행.' },
-                    { day: '13-14', city: '포르투(포르투갈)', activities: 'Day 13: 리스본에서 포르투로 기차 이동(약 3시간). 숙소 체크인 후 도루 강변 산책 및 포트 와인 시음.\nDay 14: 렐루 서점, 상벤투역 방문 후 자유시간 및 기념품 쇼핑. 포르투(OPO) 공항으로 이동하여 출국.' }
-                ]
-            };
-            
             function renderItinerary(id) {
-                const itinerary = data.itineraries[id];
+                const itinerary = itinerariesData[id];
+                const citiesByDay = {};
+                itinerary.days.forEach(day => {
+                    if (!citiesByDay[day.city]) {
+                        citiesByDay[day.city] = [];
+                    }
+                    citiesByDay[day.city].push(day);
+                });
+
                 let html = `<div class="p-4 rounded-lg bg-[#F5F5DC]/50">
                                 <h3 class="text-xl font-bold text-center text-[#A0522D] mb-2">${itinerary.title}</h3>
-                                <p class="text-center text-[#8B4513] mb-6">${itinerary.description}</p>
+                                <p class="text-center text-[#8B4513] mb-2">${itinerary.description}</p>
+                                <p class="text-center text-xl font-bold text-[#A0522D] mb-6">총 예상 경비: ${itinerary.total_estimated_cost} (1인 기준, 항공권 및 축구 티켓 별도)</p>
                                 <div class="mb-6 space-y-2 p-4 bg-white rounded-lg shadow-sm">
                                     <h4 class="font-bold text-lg text-[#A0522D]">⭐ 핵심 일정 (축구 경기)</h4>`;
                 itinerary.highlights.forEach(highlight => {
@@ -302,30 +406,37 @@
                      html += `<p class="text-sm italic text-[#8B4513] ml-6">${highlight.dateNote}</p>`;
                 });
                 html += `</div><div class="space-y-4">`;
-                itinerary.days.forEach(item => {
-                    const activitiesList = item.activities.split('\n').map(activity => `<li class="text-sm text-gray-700">${activity.trim()}</li>`).join('');
+
+                for (const city in citiesByDay) {
                     html += `
-                        <div class="iti-card flex items-start p-4 bg-white rounded-lg shadow-sm">
-                            <div class="w-16 text-center mr-4 flex-shrink-0">
-                                <p class="font-bold text-lg text-[#A0522D]">Day</p>
-                                <p class="font-bold text-2xl text-[#CD853F]">${item.day}</p>
-                            </div>
-                            <div>
-                                <p class="font-semibold text-lg text-[#8B4513]">${item.city}</p>
-                                <ul class="list-disc list-inside space-y-1 mt-1">
-                                    ${activitiesList}
+                        <div class="p-4 rounded-lg bg-white shadow-md" x-data="{ open: false }">
+                            <button @click="open = !open" class="w-full flex justify-between items-center text-left">
+                                <h4 class="font-bold text-xl text-[#CD853F]">${citiesByDay[city][0].city} (${citiesByDay[city].length}박)</h4>
+                                <span x-text="open ? '−' : '+'" class="text-2xl text-[#A0522D]"></span>
+                            </button>
+                            <div x-show="open" x-cloak x-transition class="space-y-4 mt-4 border-t border-gray-200 pt-4">`;
+                    citiesByDay[city].forEach(day => {
+                        html += `
+                            <div class="iti-card border-l-2 border-gray-300 pl-4">
+                                <p class="font-bold text-lg text-[#A0522D]">Day ${day.day}</p>
+                                <p class="text-sm text-gray-700 mt-1">${day.activities}</p>
+                                <ul class="text-sm text-gray-600 space-y-1 mt-2">
+                                    <li><strong>💵 예상 경비:</strong> ${day.daily_cost}</li>
+                                    <li><strong>🚗 교통:</strong> ${day.transport}</li>
                                 </ul>
                             </div>
-                        </div>
-                    `;
-                });
+                        `;
+                    });
+                    html += `</div></div>`;
+                }
+
                 html += `</div></div>`;
                 itineraryDetailsContainer.innerHTML = html;
             }
-
-            function renderCityInfo() {
+            
+            function renderCitiesInfo() {
                 let html = '';
-                data.cities.forEach(city => {
+                citiesData.forEach(city => {
                     html += `
                         <div class="border border-gray-200 rounded-lg bg-white/80" x-data="{ open: false }">
                             <button @click="open = !open" class="w-full flex justify-between items-center p-4 text-left">
@@ -333,12 +444,22 @@
                                 <span x-text="open ? '−' : '+'" class="text-xl text-[#A0522D]"></span>
                             </button>
                             <div x-show="open" x-cloak x-transition class="p-4 border-t border-gray-200">
-                                <h4 class="font-semibold text-md text-[#A0522D] mb-2">🏞️ 풍경과 경험</h4>
+                                <h4 class="font-semibold text-md text-[#A0522D] mb-2">🏞️ 풍경과 경험 ✨</h4>
                                 <ul class="list-disc list-inside space-y-2 text-gray-700 mb-4">
                                     ${city.sights.map(item => `<li><strong>${item.name}</strong>: ${item.desc}</li>`).join('')}
                                 </ul>
                                 <h4 class="font-semibold text-md text-[#A0522D] mb-2">🍲 대표 음식</h4>
                                 <p class="text-sm text-gray-700">${city.food}</p>
+                                <div class="mt-4 text-center">
+                                    <button onclick="fetchRestaurantRecommendations('${city.name}')" class="px-4 py-2 bg-[#F5DEB3] text-[#8B4513] font-medium rounded-lg shadow-sm hover:bg-[#CD853F] hover:text-white transition-colors">✨ AI 추천 맛집 보러가기</button>
+                                </div>
+                                <div id="restaurants-${city.name.replace(/[\(\)]/g, '')}" class="mt-4 p-4 bg-[#F8F8F8] border border-gray-300 rounded-lg hidden">
+                                    <div class="text-center">
+                                        <div class="inline-block h-8 w-8 animate-spin rounded-full border-4 border-solid border-current border-r-transparent align-[-0.125em] text-[#A0522D] motion-reduce:animate-[spin_1.5s_linear_infinite]" role="status">
+                                            <span class="!absolute !-m-px !h-px !w-px !overflow-hidden !whitespace-nowrap !border-0 !p-0 ![clip:rect(0,0,0,0)]">Loading...</span>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     `;
@@ -347,10 +468,119 @@
             }
             
             function renderInfoContent(tab) {
-                const info = data.info[tab];
-                infoContentContainer.innerHTML = `<div class="p-4">${info.content}</div>`;
+                const info = infoData[tab];
+                infoContentContainer.innerHTML = `<div id="${tab}-section" class="p-4">${info.content}</div>`;
+                if (tab === 'ai_qa') {
+                    handleAiQa();
+                }
             }
 
+            function handleAiQa() {
+                const aiQaContainer = document.querySelector('#info-content-container #ai_qa-section');
+                if (!aiQaContainer) return;
+                const input = aiQaContainer.querySelector('#ai-query-input');
+                const button = aiQaContainer.querySelector('#ai-query-button');
+                const responseContainer = aiQaContainer.querySelector('#ai-response-container');
+                const loading = aiQaContainer.querySelector('#ai-loading');
+                const responseText = aiQaContainer.querySelector('#ai-response-text');
+
+                button.addEventListener('click', async () => {
+                    const query = input.value;
+                    if (!query.trim()) return;
+
+                    loading.style.display = 'block';
+                    responseContainer.classList.remove('hidden');
+                    responseText.textContent = '';
+
+                    const prompt = `스페인과 포르투갈 여행에 대한 질문입니다: "${query}". 명확하고 간결하게 답변해주세요.`;
+                    const payload = {
+                        contents: [{ parts: [{ text: prompt }] }]
+                    };
+
+                    try {
+                        const response = await fetch(geminiApiUrl, {
+                            method: 'POST',
+                            headers: { 'Content-Type': 'application/json' },
+                            body: JSON.stringify(payload)
+                        });
+                        const result = await response.json();
+                        const text = result?.candidates?.[0]?.content?.parts?.[0]?.text || '답변을 생성하는 데 실패했습니다.';
+                        responseText.textContent = text;
+                    } catch (error) {
+                        console.error('API 호출 중 오류 발생:', error);
+                        responseText.textContent = '오류가 발생했습니다. 다시 시도해 주세요.';
+                    } finally {
+                        loading.style.display = 'none';
+                    }
+                });
+            }
+
+            window.fetchRestaurantRecommendations = async (cityName) => {
+                const container = document.getElementById(`restaurants-${cityName.replace(/[\(\)]/g, '')}`);
+                const loading = container.querySelector('.animate-spin');
+                const existingList = container.querySelector('ul');
+                if (existingList) {
+                    existingList.remove();
+                }
+                
+                container.classList.remove('hidden');
+                loading.style.display = 'block';
+
+                const city = citiesData.find(c => c.name === cityName);
+                const foodType = city.food.split(',')[0].trim();
+                const prompt = `${cityName}의 대표 음식인 ${foodType}을(를) 맛볼 수 있는 숨겨진 맛집 3곳을 추천하고, 각 맛집에 대한 간단한 설명을 한국어로 작성해 주세요.`;
+
+                const payload = {
+                    contents: [{ parts: [{ text: prompt }] }],
+                    generationConfig: {
+                        responseMimeType: "application/json",
+                        responseSchema: {
+                            type: "ARRAY",
+                            items: {
+                                type: "OBJECT",
+                                properties: {
+                                    "restaurantName": { "type": "STRING" },
+                                    "description": { "type": "STRING" },
+                                    "reason": { "type": "STRING" }
+                                }
+                            }
+                        }
+                    }
+                };
+                
+                try {
+                    const response = await fetch(geminiApiUrl, {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify(payload)
+                    });
+                    const result = await response.json();
+                    const restaurants = JSON.parse(result?.candidates?.[0]?.content?.parts?.[0]?.text || '[]');
+
+                    if (restaurants.length > 0) {
+                        let restaurantHtml = '<ul class="space-y-4">';
+                        restaurants.forEach(r => {
+                            restaurantHtml += `
+                                <li class="p-3 bg-white rounded-lg shadow-sm">
+                                    <h5 class="font-bold text-[#A0522D]">${r.restaurantName}</h5>
+                                    <p class="text-sm text-gray-700 mt-1">${r.description}</p>
+                                    <p class="text-xs italic text-[#8B4513] mt-1">추천 이유: ${r.reason}</p>
+                                </li>
+                            `;
+                        });
+                        restaurantHtml += '</ul>';
+                        container.innerHTML = restaurantHtml;
+                    } else {
+                        container.innerHTML = '<p class="text-sm text-center text-gray-500">맛집을 찾는 데 실패했습니다. 잠시 후 다시 시도해 주세요.</p>';
+                    }
+                } catch (error) {
+                    console.error('API 호출 중 오류 발생:', error);
+                    container.innerHTML = '<p class="text-sm text-center text-red-500">맛집 추천에 실패했습니다. API 호출 중 오류가 발생했습니다.</p>';
+                } finally {
+                    loading.style.display = 'none';
+                }
+            };
+            
             navButtons.forEach(button => {
                 button.addEventListener('click', () => {
                     const targetId = button.dataset.target;
@@ -365,6 +595,12 @@
                             section.classList.add('hidden');
                         }
                     });
+
+                    if (targetId === 'info') {
+                        handleAiQa();
+                    } else if (targetId === 'cities') {
+                        renderCitiesInfo();
+                    }
                 });
             });
             
@@ -385,7 +621,7 @@
             });
 
             renderItinerary('1');
-            renderCityInfo();
+            renderCitiesInfo();
             renderInfoContent('weather');
 
             const budgetCtx = document.getElementById('budgetChart').getContext('2d');
